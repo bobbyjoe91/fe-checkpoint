@@ -57,6 +57,8 @@ export default function Login() {
                   <Form.Control id="password" name="password" type="password" />
                 </Form.Group>
 
+                {loginError ? <p id="error">{loginError}</p> : null}
+
                 <div className="login-register">
                   <p className="cta-redirect">
                     Belum punya akun? {' '}
@@ -67,8 +69,6 @@ export default function Login() {
                   </Button>
                 </div>
               </Form>
-
-              { loginError ? <p id="error">{loginError}</p> : null }
             </div>
           </div>
         </main>
