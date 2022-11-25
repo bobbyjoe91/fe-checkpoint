@@ -16,4 +16,8 @@ a {
   box-sizing: border-box;
 }
 
+p {
+  margin: 0 !important;
+}
+
 @import "./custom/Index.module.css";

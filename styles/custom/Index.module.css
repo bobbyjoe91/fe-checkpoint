@@ -64,6 +64,10 @@
   margin-left: 0.5rem;
 }
 
+.profile-pic {
+  margin-top: 20px;
+}
+
 #date-range-filter {
   display: flex;
   flex-direction: row;
@@ -89,6 +93,14 @@
   justify-content: center;
 }
 
+#profile-data {
+  margin-left: 10px;
+}
+
+#clock-in-out {
+  margin-top: 10px;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
@@ -104,5 +116,23 @@
     border-top: 1px solid #eaeaea;
     justify-content: center;
     align-items: center;
+  }
+
+  #profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .department {
+    text-align: center;
+  }
+
+  #clock-in-out {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }

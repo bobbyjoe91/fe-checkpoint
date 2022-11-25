@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 
-import { Pagination, Table } from 'react-bootstrap';
+import { Button, Pagination, Table } from 'react-bootstrap';
 
 import Footer from '../components/Footer';
 import styles from '../styles/custom/Index.module.css';
@@ -16,17 +16,46 @@ export default function Home() {
 
       <div className={styles.container}>
         <main className={styles.main}>
-          <Image
-            src="/assets/blank.png"
-            width={128}
-            height={128}
-            alt="John Doe's Profile Picture"
-          />
-          <h1 className={styles.title}>John Doe</h1>
-          <p>Human Resource Development | Staff</p>
+          <div className="d-none d-md-flex align-items-md-center">
+            <Image
+              src="/assets/blank.png"
+              width={100}
+              height={100}
+              className="profile-pic"
+              alt="John Doe's Profile Picture"
+            />
+
+            <div id="profile-data" className="d-none d-md-flex flex-column justify-content-md-evenly">
+              <h1 className={styles.title}>John Doe</h1>
+              <p>Human Resource Development | Staff</p>
+            </div>
+          </div>
+
+          <div className="d-block d-sm-block d-md-none">
+            <div id="profile">
+              <Image
+                src="/assets/blank.png"
+                width={100}
+                height={100}
+                className="profile-pic"
+                alt="John Doe's Profile Picture"
+              />
+              <h1 className={styles.title}>John Doe</h1>
+              <p className="department">Human Resource Development</p>
+              <p>Staff</p>
+            </div>
+          </div>
+
+          <div id="clock-in-out">
+            <Button varian="primary" style={{ marginRight: '10px' }}>Clock In</Button>
+            <Button variant="warning" disabled>Clock Out</Button>
+          </div>
 
           {/* daterange filter */}
-          <div id="date-range-filter">
+          <div
+            style={{ margin: '10px 0' }}
+            className="d-none d-md-flex flex-row justify-content-md-between"
+          >
             <p>Filter berdasarkan tanggal</p>
             <div id='filter'>
               <div>
@@ -34,6 +63,27 @@ export default function Home() {
                 <input type="date" />
               </div>
               <div style={{ width: '10px' }}/>
+              <div>
+                <label className='filter-label'>Hingga:</label>
+                <input type="date" />
+              </div>
+            </div>
+          </div>
+
+          <div className="d-block d-sm-block d-md-none">
+            <div style={{ height: '20px' }}/>
+            <p>Filter berdasarkan tanggal</p>
+            <div style={{ height: '10px' }} />
+            <div
+              style={{ marginBottom: '10px' }}
+              className="d-flex flex-row justify-content-between justify-content-between flex-wrap"
+            >
+              <div>
+                <label className='filter-label'>Dari:</label>
+                <input type="date" />
+
+                <div className="d-block d-sm-none" style={{ height: '10px' }} />
+              </div>
               <div>
                 <label className='filter-label'>Hingga:</label>
                 <input type="date" />
