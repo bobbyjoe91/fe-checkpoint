@@ -64,6 +64,31 @@
   margin-left: 0.5rem;
 }
 
+#date-range-filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-label {
+  margin-right: 5px;
+}
+
+#pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

@@ -15,3 +15,5 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@import "./custom/Index.module.css";
