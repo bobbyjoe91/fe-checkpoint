@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Button, Pagination, Table } from 'react-bootstrap';
 
 import Footer from '../components/Footer';
+import TopNavbar from '../components/TopNavbar';
 import styles from '../styles/custom/Index.module.css';
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
         <meta name="description" content="CheckPoint" />
       </Head>
 
+      <TopNavbar />
       <div className="container">
         <main className="main">
           <div className="d-none d-md-flex align-items-md-center">
