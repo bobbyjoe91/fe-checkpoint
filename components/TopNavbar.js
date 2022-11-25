@@ -27,16 +27,11 @@ export default function TopNavbar({ title, brandHref, isAdmin, employeeId }) {
       </Navbar.Brand>
       <DropdownButton align="end" title={<SettingIcon />} variant="info">
         {
-          !isAdmin
-            ? <>
-                <Dropdown.Item href={`/edit/${employeeId}`}>Edit profil</Dropdown.Item>
-                <Dropdown.Divider />
-              </>
-            : <>
-                <Dropdown.Item href={`/admin/create-employee`}>Buat karyawan baru</Dropdown.Item>
-                <Dropdown.Divider />
-              </>
+          isAdmin
+            ? <Dropdown.Item href={`/admin/create-employee`}>Buat karyawan baru</Dropdown.Item> 
+            : <Dropdown.Item href={`/edit/${employeeId}`}>Edit profil</Dropdown.Item>
         }
+        <Dropdown.Divider />
         <Dropdown.Item href="/login">
           Keluar
         </Dropdown.Item>

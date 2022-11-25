@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 
 import { Pagination, Table } from 'react-bootstrap';
 
@@ -7,6 +8,17 @@ import ProfilePicture from '../../components/ProfilePicture';
 import TopNavbar from '../../components/TopNavbar';
 
 import styles from '../../styles/custom/Index.module.css';
+
+function EditRow({ eid, name }) {
+  return (
+    <td>
+      <div className="d-flex flex-row justify-content-between">
+        <p>{name}</p>
+        <Link href={`/admin/edit/${eid}`}>Edit</Link>
+      </div>
+    </td>
+  );
+}
 
 export default function Home() {
   return (
@@ -94,25 +106,25 @@ export default function Home() {
             </thead>
             <tbody>
               <tr>
-                <td>John Doe</td>
+                <EditRow eid="1" name="John Doe" />
                 <td>2022-10-10</td>
                 <td>07:30:00</td>
                 <td>18:00:05</td>
               </tr>
               <tr>
-                <td>John Doe</td>
+                <EditRow eid="1" name="John Doe" />
                 <td>2022-10-10</td>
                 <td>07:30:00</td>
                 <td>18:00:05</td>
               </tr>
               <tr>
-                <td>John Doe</td>
+                <EditRow eid="1" name="John Doe" />
                 <td>2022-10-10</td>
                 <td>07:30:00</td>
                 <td>18:00:05</td>
               </tr>
               <tr>
-                <td>John Doe</td>
+                <EditRow eid="1" name="John Doe" />
                 <td>2022-10-10</td>
                 <td>07:30:00</td>
                 <td>18:00:05</td>

@@ -37,12 +37,14 @@ export default function Edit() {
             <div id="main-form" className="mb-5">
               <h2>Ubah foto dan nomor ponsel</h2>
               <Form>
-                <ProfilePicture
-                  src={null}
-                  alt="John Doe's Profile Picture"
-                />
+                <div className="d-flex justify-content-center mb-3">
+                  <ProfilePicture
+                    src={null}
+                    alt="John Doe's Profile Picture"
+                  />
+                </div>
                 <Form.Group className="mb-3">
-                  <Form.Label>Upload foto profil</Form.Label>
+                  <Form.Label>Ubah foto profil</Form.Label>
                   <Form.Control type="file" name="profile-pic" accep="image/*" />
                 </Form.Group>
                 <Form.Group className="mb-3">
