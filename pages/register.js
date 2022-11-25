@@ -16,7 +16,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>CheckPoint | Login</title>
+        <title>CheckPoint | Register</title>
         <meta name="description" content="CheckPoint" />
       </Head>
 
