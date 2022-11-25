@@ -20,4 +20,13 @@ p {
   margin: 0 !important;
 }
 
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  min-height: 100vh;
+}
+
 @import "./custom/Index.module.css";
+@import "./custom/Login.module.css";

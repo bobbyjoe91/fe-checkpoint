@@ -14,8 +14,8 @@ export default function Home() {
         <meta name="description" content="CheckPoint" />
       </Head>
 
-      <div className={styles.container}>
-        <main className={styles.main}>
+      <div className="container">
+        <main className="main">
           <div className="d-none d-md-flex align-items-md-center">
             <Image
               src="/assets/blank.png"

@@ -14,8 +14,8 @@ export default function Home() {
         <meta name="description" content="CheckPoint" />
       </Head>
 
-      <div className={styles.container}>
-        <main className={styles.main}>
+      <div className="container">
+        <main className="main">
           <div className="d-none d-md-flex align-items-md-center">
             <Image
               src="/assets/blank.png"
@@ -47,8 +47,14 @@ export default function Home() {
           </div>
 
           <div id="clock-in-out">
-            <Button varian="primary" style={{ marginRight: '10px' }}>Clock In</Button>
-            <Button variant="warning" disabled>Clock Out</Button>
+            <Button
+              variant="warning"
+              style={{ marginRight: '10px' }}
+              disabled
+            >
+              Clock Out
+            </Button>
+            <Button varian="primary">Clock In</Button>
           </div>
 
           {/* daterange filter */}
