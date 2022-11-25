@@ -15,15 +15,23 @@ function SettingIcon() {
   );
 }
 
-export default function TopNavbar() {
+export default function TopNavbar({ title, brandHref, isAdmin }) {
   return (
     <Navbar bg="primary" expand="lg">
       <Navbar.Brand>
-        <Link href="/" id="nav-brand">CheckPoint</Link>
+        <Link href={brandHref ?? "/"} id="nav-brand">
+          {title ?? 'CheckPoint'}
+        </Link>
       </Navbar.Brand>
       <DropdownButton align="end" title={<SettingIcon />} variant="info">
-        <Dropdown.Item href="/edit">Setting</Dropdown.Item>
-        <Dropdown.Divider />
+        {
+          !isAdmin
+            ? <>
+                <Dropdown.Item href="/edit">Setting</Dropdown.Item>
+                <Dropdown.Divider />
+              </>
+            : null
+        }
         <Dropdown.Item href="/login">
           Keluar
         </Dropdown.Item>

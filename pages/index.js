@@ -5,6 +5,7 @@ import { Button, Pagination, Table } from 'react-bootstrap';
 
 import Footer from '../components/Footer';
 import TopNavbar from '../components/TopNavbar';
+
 import styles from '../styles/custom/Index.module.css';
 
 export default function Home() {
