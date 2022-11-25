@@ -15,7 +15,7 @@ function SettingIcon() {
   );
 }
 
-export default function TopNavbar({ title, brandHref, isAdmin }) {
+export default function TopNavbar({ title, brandHref, isAdmin, employeeId }) {
   return (
     <Navbar bg="primary" expand="lg">
       <Navbar.Brand>
@@ -27,7 +27,7 @@ export default function TopNavbar({ title, brandHref, isAdmin }) {
         {
           !isAdmin
             ? <>
-                <Dropdown.Item href="/edit">Setting</Dropdown.Item>
+                <Dropdown.Item href={`/edit/${employeeId}`}>Edit profil</Dropdown.Item>
                 <Dropdown.Divider />
               </>
             : null

@@ -16,7 +16,7 @@ export default function Home() {
         <meta name="description" content="CheckPoint" />
       </Head>
 
-      <TopNavbar />
+      <TopNavbar employeeId={1} />
       <div className="container">
         <main className="main">
           <div className="d-none d-md-flex align-items-md-center">
