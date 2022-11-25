@@ -2,6 +2,8 @@ import Head from 'next/head';
 
 import { Button, Pagination, Table } from 'react-bootstrap';
 
+import { AuthProvider } from '../context/AuthContext';
+
 import Footer from '../components/Footer';
 import ProfilePicture from '../components/ProfilePicture';
 import TopNavbar from '../components/TopNavbar';
@@ -10,7 +12,7 @@ import styles from '../styles/custom/Index.module.css';
 
 export default function Home() {
   return (
-    <>
+    <AuthProvider>
       <Head>
         <title>CheckPoint | Home</title>
         <meta name="description" content="CheckPoint" />
@@ -140,6 +142,6 @@ export default function Home() {
       </div>
 
       <Footer />
-    </>
+    </AuthProvider>
   );
 }

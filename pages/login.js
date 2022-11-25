@@ -5,12 +5,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { Button, Form } from 'react-bootstrap';
+import { useCookies } from 'react-cookie';
 
 import Footer from '../components/Footer';
 
 export default function Login() {
   const [loginError, setLoginError] = useState('');
+
+  const [cookies, setCookies] = useCookies(['user']);
   const router = useRouter();
 
   function onLogin(event) {
@@ -21,7 +25,12 @@ export default function Login() {
 
     axios.post('http://localhost:8000/auth/login', { email, password })
       .then((response) => {
-        console.log(response);
+        console.log()
+        setCookies(
+          'userData',
+          response.data,
+          { expires: dayjs().add(4, 'hour').toDate() }
+        );
         router.push({ pathname: '/' });
       })
       .catch((error) => {

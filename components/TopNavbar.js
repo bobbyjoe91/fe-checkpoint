@@ -1,7 +1,11 @@
+import React, { useContext } from 'react';
+
 import Link from "next/link";
 import Image from "next/image";
 
 import { Navbar, DropdownButton, Dropdown } from "react-bootstrap";
+
+import { AuthContext } from '../context/AuthContext';
 
 function SettingIcon() {
   return (
@@ -16,6 +20,7 @@ function SettingIcon() {
 }
 
 export default function TopNavbar({ title, brandHref, isAdmin, employeeId }) {
+  const { logout } = useContext(AuthContext);
   const homeUrl = brandHref ?? (isAdmin ? '/admin' : '/');
 
   return (
@@ -32,7 +37,7 @@ export default function TopNavbar({ title, brandHref, isAdmin, employeeId }) {
             : <Dropdown.Item href={`/edit/${employeeId}`}>Edit profil</Dropdown.Item>
         }
         <Dropdown.Divider />
-        <Dropdown.Item href="/login">
+        <Dropdown.Item onClick={logout}>
           Keluar
         </Dropdown.Item>
       </DropdownButton>
