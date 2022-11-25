@@ -1,8 +1,9 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { Button, Form } from 'react-bootstrap';
+
+import { DIVISIONS, POSITIONS } from '../../utils/constant';
 
 import Footer from '../../components/Footer';
 import TopNavbar from '../../components/TopNavbar';
@@ -34,6 +35,32 @@ export default function CreateEmployee() {
               <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control placeholder="employee@company.com" type="email" />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Jabatan</Form.Label>
+                <Form.Select aria-label="Posisi">
+                  <option hidden>Pilih jabatan</option>
+                  {
+                    Object.keys(POSITIONS).map(positionId => (
+                      <option key={POSITIONS[positionId] + positionId} value={positionId}>
+                        {POSITIONS[positionId]}
+                      </option>
+                    ))
+                  }
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Divisi</Form.Label>
+                <Form.Select aria-label="Posisi">
+                  <option hidden>Pilih divisi</option>
+                  {
+                    Object.keys(DIVISIONS).map(divisionId => (
+                      <option key={DIVISIONS[divisionId] + divisionId} value={divisionId}>
+                        {DIVISIONS[divisionId]}
+                      </option>
+                    ))
+                  }
+                </Form.Select>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Password sementara</Form.Label>
