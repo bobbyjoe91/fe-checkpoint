@@ -16,10 +16,12 @@ function SettingIcon() {
 }
 
 export default function TopNavbar({ title, brandHref, isAdmin, employeeId }) {
+  const homeUrl = brandHref ?? (isAdmin ? '/admin' : '/');
+
   return (
     <Navbar bg="primary" expand="lg">
       <Navbar.Brand>
-        <Link href={brandHref ?? "/"} id="nav-brand">
+        <Link href={homeUrl} id="nav-brand">
           {title ?? 'CheckPoint'}
         </Link>
       </Navbar.Brand>
@@ -30,7 +32,10 @@ export default function TopNavbar({ title, brandHref, isAdmin, employeeId }) {
                 <Dropdown.Item href={`/edit/${employeeId}`}>Edit profil</Dropdown.Item>
                 <Dropdown.Divider />
               </>
-            : null
+            : <>
+                <Dropdown.Item href={`/admin/create-employee`}>Buat karyawan baru</Dropdown.Item>
+                <Dropdown.Divider />
+              </>
         }
         <Dropdown.Item href="/login">
           Keluar
