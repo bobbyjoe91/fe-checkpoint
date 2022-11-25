@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import Image from 'next/image';
 
 import { Pagination, Table } from 'react-bootstrap';
 
 import Footer from '../../components/Footer';
+import ProfilePicture from '../../components/ProfilePicture';
 import TopNavbar from '../../components/TopNavbar';
 
 import styles from '../../styles/custom/Index.module.css';
@@ -20,11 +20,8 @@ export default function Home() {
       <div className="container">
         <main className="main">
           <div className="d-none d-md-flex align-items-md-center">
-            <Image
-              src="/assets/blank.png"
-              width={100}
-              height={100}
-              className="profile-pic"
+            <ProfilePicture
+              src={null}
               alt="John Doe's Profile Picture"
             />
 
@@ -36,11 +33,8 @@ export default function Home() {
 
           <div className="d-block d-sm-block d-md-none">
             <div id="profile">
-              <Image
-                src="/assets/blank.png"
-                width={100}
-                height={100}
-                className="profile-pic"
+              <ProfilePicture
+                src={null}
                 alt="John Doe's Profile Picture"
               />
               <h1 className={styles.title}>John Doe</h1>

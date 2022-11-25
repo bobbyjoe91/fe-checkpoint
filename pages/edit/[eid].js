@@ -1,10 +1,10 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { Button, Form } from "react-bootstrap";
 
 import Footer from '../../components/Footer';
+import ProfilePicture from "../../components/ProfilePicture";
 import TopNavbar from "../../components/TopNavbar";
 
 export default function Edit() {
@@ -37,11 +37,8 @@ export default function Edit() {
             <div id="main-form" className="mb-5">
               <h2>Ubah foto dan nomor ponsel</h2>
               <Form>
-                <Image
-                  src="/assets/blank.png"
-                  width={100}
-                  height={100}
-                  className="profile-pic mb-2"
+                <ProfilePicture
+                  src={null}
                   alt="John Doe's Profile Picture"
                 />
                 <Form.Group className="mb-3">
