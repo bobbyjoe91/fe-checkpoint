@@ -36,7 +36,7 @@ export default function Login() {
                 </Form.Group>
 
                 <div className="login-register">
-                  <p>
+                  <p className="cta-redirect">
                     Belum punya akun? {' '}
                     <Link href="/register" className="register">Daftar</Link>
                   </p>
