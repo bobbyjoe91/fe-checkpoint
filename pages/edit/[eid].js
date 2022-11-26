@@ -85,7 +85,7 @@ export default function Edit() {
     formData.append('phoneNumber', phoneNumber);
 
     if (profilePic.length) {
-      formData.append('profilePic', picFile);
+      formData.append('profilePic', profilePic[0]);
     }
 
     axios.post(`http://localhost:8000/edit/${eid}`, formData)
