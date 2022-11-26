@@ -165,32 +165,6 @@ export default function Home() {
                           ))
                       }
                     </tbody>
-                    {/* <tbody>
-                      <tr>
-                        <EditRow eid="1" name="John Doe" />
-                        <td>2022-10-10</td>
-                        <td>07:30:00</td>
-                        <td>18:00:05</td>
-                      </tr>
-                      <tr>
-                        <EditRow eid="1" name="John Doe" />
-                        <td>2022-10-10</td>
-                        <td>07:30:00</td>
-                        <td>18:00:05</td>
-                      </tr>
-                      <tr>
-                        <EditRow eid="1" name="John Doe" />
-                        <td>2022-10-10</td>
-                        <td>07:30:00</td>
-                        <td>18:00:05</td>
-                      </tr>
-                      <tr>
-                        <EditRow eid="1" name="John Doe" />
-                        <td>2022-10-10</td>
-                        <td>07:30:00</td>
-                        <td>18:00:05</td>
-                      </tr>
-                    </tbody> */}
                   </Table>
                 </main>
               </div>

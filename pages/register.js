@@ -50,7 +50,7 @@ export default function Login() {
           setPasswordError(error.response.data.data);
         });
     } else {
-      setPasswordError(true);
+      setPasswordError('Password tidak cocok');
     }
   }
 
