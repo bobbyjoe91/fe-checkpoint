@@ -115,7 +115,7 @@ export default function Home() {
                 <main className="main">
                   <div className="d-none d-md-flex align-items-md-center">
                     <ProfilePicture
-                      src={null}
+                      src={userData.photo_url}
                       alt={`${userData.name}'s Profile Picture`}
                     />
 
@@ -128,7 +128,7 @@ export default function Home() {
                   <div className="d-block d-sm-block d-md-none">
                     <div id="profile">
                       <ProfilePicture
-                        src={null}
+                        src={userData.photo_url}
                         alt={`${userData.name}'s Profile Picture`}
                       />
                       <h1 className={styles.title}>{userData.name}</h1>

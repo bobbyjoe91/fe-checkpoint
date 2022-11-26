@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-export default function ProfilePicture({ source, height, width, alt }) {
+export default function ProfilePicture({ src, height, width, alt }) {
   return (
     <Image
-      src={source ?? '/assets/blank.png'}
+      src={src ?? '/assets/blank.png'}
       width={width ?? 100}
       height={height ?? 100}
       className="profile-pic"
