@@ -22,6 +22,10 @@
   text-align: center;
 }
 
+#error {
+  color: #ff5512;
+}
+
 @media (max-width: 768px) {
   #main-form {
     border: 2px solid gray;
@@ -29,6 +33,12 @@
 
     padding: 30px;
     width: 80vw;
+  }
+
+  #error {
+    color: #ff5512;
+    text-align: center;
+    margin-bottom: 10px !important;
   }
 }
 

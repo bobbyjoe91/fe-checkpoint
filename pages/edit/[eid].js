@@ -1,7 +1,13 @@
+import React, { useState } from 'react';
+
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+import axios from 'axios';
 import { Button, Form } from "react-bootstrap";
+import { useCookies } from 'react-cookie';
+
+import { AuthProvider } from '../../context/AuthContext';
 
 import Footer from '../../components/Footer';
 import ProfilePicture from "../../components/ProfilePicture";
@@ -11,12 +17,39 @@ export default function Edit() {
   const router = useRouter();
   const { eid } = router.query;
 
+  const [cookies, setCookies] = useCookies();
+
+  const [changePassSuccess, setChangePassSuccess] = useState(false);
+  const [changePassError, setChangePassError] = useState('');
+
   function onChangePassword(event) {
     event.preventDefault();
-    const password = document.getElementById('password').value;
-    const passwordConfirmation = document.getElementById('passwordConfirmation').value;
+    const oldPassword = document.getElementById('oldPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const newPasswordConfirmation = document.getElementById('newPasswordConfirmation').value;
 
-    // TODO: put password to http://localhost:8000/auth/reset-password
+    if (newPassword !== newPasswordConfirmation) {
+      setChangePassError('Password tidak cocok');
+      setChangePassSuccess(false);
+    } else {
+      axios.put(
+        'http://localhost:8000/auth/reset-password',
+        {
+          employeeId: cookies.employeeId,
+          oldPassword,
+          newPassword,
+        }
+      )
+        .then(() => {
+          setChangePassSuccess(true);
+          setChangePassError('');
+        })
+        .catch((error) => {
+          console.error(error);
+          setChangePassError(error.response.data.data);
+          setChangePassSuccess(false);
+        });
+    }
   }
 
   function onChangePersonalData() {
@@ -24,13 +57,13 @@ export default function Edit() {
   }
 
   return (
-    <>
+    <AuthProvider>
       <Head>
         <title>CheckPoint | Edit profil</title>
         <meta name="description" content="CheckPoint" />
       </Head>
 
-      <TopNavbar employeeId={1} />
+      <TopNavbar employeeId={eid} />
       <div className="container">
         <main className="main d-flex justify-content-center align-items-center pt-5 pb-5">
           <div>
@@ -64,21 +97,28 @@ export default function Edit() {
               <h2>Ubah password</h2>
               <Form onSubmit={onChangePassword}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    id="password"
-                    name="password"
-                  />
+                  <Form.Label>Password lama</Form.Label>
+                  <Form.Control type="password" id="oldPassword" name="oldPassword" />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Konfirmasi password</Form.Label>
+                  <Form.Label>Password baru</Form.Label>
+                  <Form.Control type="password" id="newPassword" name="newPassword" />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Konfirmasi password baru</Form.Label>
                   <Form.Control
                     type="password"
-                    id="passwordConfirmation"
-                    name="passwordConfirmation"
+                    id="newPasswordConfirmation"
+                    name="newPasswordConfirmation"
                   />
                 </Form.Group>
+
+                {changePassError ? <p id="error">{changePassError}</p> : null}
+                {
+                  changePassSuccess
+                    ? <p className="text-success">Password berhasil diubah</p>
+                    : null
+                }
 
                 <div className="clearfix">
                   <Button type="submit" className="float-end" variant="warning">
@@ -92,6 +132,6 @@ export default function Edit() {
       </div>
 
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
