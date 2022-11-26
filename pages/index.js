@@ -27,6 +27,12 @@ export default function Home() {
     { revalidateOnFocus: false }
   );
 
+  const { data: swrAttendanceData, errorAttendance, mutate: mutateAttendance } = useSWR(
+    `http://localhost:8000/attendances/${cookies.employeeId}`,
+    (url) => axios.get(url).then((response) => response.data.data),
+    { revalidateOnFocus: false }
+  );
+
   useEffect(() => {
     if (!_.isEmpty(swrUserData)) {
       setUserData(swrUserData[0]);
@@ -38,6 +44,10 @@ export default function Home() {
 
     return () => {}
   }, [swrUserData]);
+
+  useEffect(() => {
+    mutateAttendance();
+  }, [hasClockedIn]);
 
   async function onClocking(status) {
     try {
@@ -160,28 +170,26 @@ export default function Home() {
                 <th>Clock Out</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>2022-10-10</td>
-                <td>07:30:00</td>
-                <td>18:00:05</td>
-              </tr>
-              <tr>
-                <td>2022-10-10</td>
-                <td>07:30:00</td>
-                <td>18:00:05</td>
-              </tr>
-              <tr>
-                <td>2022-10-10</td>
-                <td>07:30:00</td>
-                <td>18:00:05</td>
-              </tr>
-              <tr>
-                <td>2022-10-10</td>
-                <td>07:30:00</td>
-                <td>18:00:05</td>
-              </tr>
-            </tbody>
+
+            {
+              !swrAttendanceData
+                ? <p>Loading attendances...</p>
+                : _.isEmpty(swrAttendanceData)
+                ? <h2>No attendances available</h2>
+                : errorAttendance
+                ? <h2>Error getting attendances</h2>
+                : <tbody>
+                    {
+                      swrAttendanceData.map((attendance) => (
+                        <tr>
+                          <td>{attendance.date}</td>
+                          <td>{attendance.time_in}</td>
+                          <td>{attendance.time_out}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+            }
           </Table>
 
           <div className="d-flex justify-content-center">
