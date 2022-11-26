@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import { Button, Form } from 'react-bootstrap';
 
+import { AdminAuthProvider } from '../../../context/AdminAuthContext';
+
 import Footer from '../../../components/Footer';
 import ProfilePicture from '../../../components/ProfilePicture';
 import TopNavbar from '../../../components/TopNavbar';
@@ -11,7 +13,7 @@ export default function CreateEmployee() {
   const router = useRouter();
 
   return (
-    <>
+    <AdminAuthProvider>
       <Head>
         <title>CheckPoint | Edit karyawan</title>
         <meta name="description" content="CheckPoint" />
@@ -57,6 +59,6 @@ export default function CreateEmployee() {
       </div>
 
       <Footer />
-    </>
+    </AdminAuthProvider>
   );
 }
