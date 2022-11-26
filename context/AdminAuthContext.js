@@ -15,7 +15,6 @@ export function AdminAuthProvider({ children }) {
   useEffect(() => {
     const { adminId } = cookies;
 
-    console.log(cookies);
     if (_.isNull(adminId) || _.isEmpty(adminId) || _.isUndefined(adminId)) {
       router.push({ pathname: '/admin/login' });
     } else setLogin(true);
