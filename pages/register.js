@@ -27,12 +27,6 @@ export default function Login() {
     const positionId = document.getElementById('positionId').value;
     const divisionId = document.getElementById('divisionId').value;
     const profilePic = document.getElementById('profilePic').files;
-
-    let picFile;
-    if (profilePic.length) {
-      picFile = profilePic[0];
-    }
-    
    
     if (password === confirmPassword) {
       setPasswordError(false);
@@ -46,7 +40,7 @@ export default function Login() {
       formData.append('divisionId', divisionId);
 
       if (profilePic.length) {
-        formData.append('profilePic', picFile);
+        formData.append('profilePic', profilePic[0]);
       }
 
       axios.post('http://localhost:8000/register', formData)
@@ -56,7 +50,7 @@ export default function Login() {
           setPasswordError(error.response.data.data);
         });
     } else {
-      setPasswordError(true);
+      setPasswordError('Password tidak cocok');
     }
   }
 

@@ -121,7 +121,7 @@ export default function Home() {
 
                     <div id="profile-data" className="d-none d-md-flex flex-column justify-content-md-evenly">
                       <h1 className={styles.title}>{userData.name}</h1>
-                      <p>{userData.division_name} | {userData.position_name}</p>
+                      <p>{userData.division_name} | {userData.position_name} | {userData.phone_number}</p>
                     </div>
                   </div>
 
@@ -134,6 +134,7 @@ export default function Home() {
                       <h1 className={styles.title}>{userData.name}</h1>
                       <p className="department">{userData.division_name}</p>
                       <p>{userData.position_name}</p>
+                      <p>{userData.phone_number}</p>
                     </div>
                   </div>
 
