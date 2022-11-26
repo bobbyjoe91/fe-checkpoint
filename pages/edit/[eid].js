@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { Button, Form } from "react-bootstrap";
 
+import { AuthProvider } from '../../context/AuthContext';
+
 import Footer from '../../components/Footer';
 import ProfilePicture from "../../components/ProfilePicture";
 import TopNavbar from "../../components/TopNavbar";
@@ -24,13 +26,13 @@ export default function Edit() {
   }
 
   return (
-    <>
+    <AuthProvider>
       <Head>
         <title>CheckPoint | Edit profil</title>
         <meta name="description" content="CheckPoint" />
       </Head>
 
-      <TopNavbar employeeId={1} />
+      <TopNavbar employeeId={eid} />
       <div className="container">
         <main className="main d-flex justify-content-center align-items-center pt-5 pb-5">
           <div>
@@ -92,6 +94,6 @@ export default function Edit() {
       </div>
 
       <Footer />
-    </>
+    </AuthProvider>
   );
 }

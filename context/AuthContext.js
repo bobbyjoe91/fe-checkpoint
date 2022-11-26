@@ -20,16 +20,13 @@ export function AuthProvider({ children }) {
     } else setLogin(true);
   }, []);
 
-  function logout(event) {
-    event.preventDefault();
-
+  function logout() {
     try {
       console.log('Logging out...');
-      setCookies('userData', {}, { expires: new Date(0) });
+      setCookies('employeeId', '', { expires: new Date(0) });
       router.push({ pathname: '/login' });
     } catch (err) {
       console.log('Logout error:', err);
-      showLogoutErrorModal(true);
     }
   }
 
