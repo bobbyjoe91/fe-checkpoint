@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <p>CheckPoint</p>
-      <p>Since 2022</p>
+      <p id="footer-year">Since 2022</p>
     </footer>
   );
 }

@@ -7,6 +7,10 @@
   align-items: center;
 }
 
+#footer-year {
+  margin-left: 10px !important;
+}
+
 .description {
   margin: 4rem 0;
   line-height: 1.5;
