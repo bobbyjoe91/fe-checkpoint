@@ -26,7 +26,13 @@ export default function Login() {
     const confirmPassword = document.getElementById('confirmPassword').value;
     const positionId = document.getElementById('positionId').value;
     const divisionId = document.getElementById('divisionId').value;
-    const profilePic = document.getElementById('profilePic').files[0];
+    const profilePic = document.getElementById('profilePic').files;
+
+    let picFile;
+    if (profilePic.length) {
+      picFile = profilePic[0];
+    }
+    
    
     if (password === confirmPassword) {
       setPasswordError(false);
@@ -37,8 +43,11 @@ export default function Login() {
       formData.append('phoneNumber', phoneNumber);
       formData.append('password', password);
       formData.append('positionId', positionId);
-      formData.append('profilePic', profilePic);
       formData.append('divisionId', divisionId);
+
+      if (profilePic.length) {
+        formData.append('profilePic', picFile);
+      }
 
       axios.post('http://localhost:8000/register', formData)
         .then(() => router.push({ pathname: '/login' }))
