@@ -13,9 +13,9 @@ export function AuthProvider({ children }) {
   const [isLogin, setLogin] = useState(false);
 
   useEffect(() => {
-    const { userData } = cookies;
+    const { employeeId } = cookies;
 
-    if (_.isEmpty(userData)) {
+    if (_.isNull(employeeId) || _.isEmpty(employeeId) || _.isUndefined(employeeId)) {
       router.push({ pathname: '/login' });
     } else setLogin(true);
   }, []);

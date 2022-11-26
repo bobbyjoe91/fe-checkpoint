@@ -1,6 +1,11 @@
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 
+import axios from 'axios';
+import _ from 'lodash';
 import { Button, Pagination, Table } from 'react-bootstrap';
+import { useCookies } from 'react-cookie';
+import useSWR from 'swr';
 
 import { AuthProvider } from '../context/AuthContext';
 
@@ -11,6 +16,29 @@ import TopNavbar from '../components/TopNavbar';
 import styles from '../styles/custom/Index.module.css';
 
 export default function Home() {
+  const [cookies, setCookies] = useCookies(['user']);
+  const [userData, setUserData] = useState({});
+
+  const { data: swrUserData, error } = useSWR(
+    `http://localhost:8000/employee/${cookies.employeeId}`,
+    (url) => axios.get(url).then((response) => response.data.data),
+    { revalidateOnFocus: false }
+  );
+
+  useEffect(() => {
+    if (!_.isEmpty(swrUserData)) {
+      setUserData(swrUserData[0]);
+    }
+
+    return () => {}
+  }, [swrUserData])
+
+  if (_.isEmpty(swrUserData)) {
+    return <h1>Loading...</h1>;
+  } else if (error) {
+    return <p>Loading failed</p>
+  }
+
   return (
     <AuthProvider>
       <Head>
@@ -28,8 +56,8 @@ export default function Home() {
             />
 
             <div id="profile-data" className="d-none d-md-flex flex-column justify-content-md-evenly">
-              <h1 className={styles.title}>John Doe</h1>
-              <p>Human Resource Development | Staff</p>
+              <h1 className={styles.title}>{userData.name}</h1>
+              <p>{userData.division_name} | {userData.position_name}</p>
             </div>
           </div>
 
@@ -39,9 +67,9 @@ export default function Home() {
                 src={null}
                 alt="John Doe's Profile Picture"
               />
-              <h1 className={styles.title}>John Doe</h1>
-              <p className="department">Human Resource Development</p>
-              <p>Staff</p>
+              <h1 className={styles.title}>{userData.name}</h1>
+              <p className="department">{userData.division_name}</p>
+              <p>{userData.position_name}</p>
             </div>
           </div>
 
@@ -67,7 +95,7 @@ export default function Home() {
                 <label className='filter-label'>Dari:</label>
                 <input type="date" />
               </div>
-              <div style={{ width: '10px' }}/>
+              <div style={{ width: '10px' }} />
               <div>
                 <label className='filter-label'>Hingga:</label>
                 <input type="date" />
@@ -76,7 +104,7 @@ export default function Home() {
           </div>
 
           <div className="d-block d-sm-block d-md-none">
-            <div style={{ height: '20px' }}/>
+            <div style={{ height: '20px' }} />
             <p>Filter berdasarkan tanggal</p>
             <div style={{ height: '10px' }} />
             <div

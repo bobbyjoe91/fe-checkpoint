@@ -25,10 +25,9 @@ export default function Login() {
 
     axios.post('http://localhost:8000/auth/login', { email, password })
       .then((response) => {
-        console.log()
         setCookies(
-          'userData',
-          response.data,
+          'employeeId',
+          response.data.data.employee_id,
           { expires: dayjs().add(4, 'hour').toDate() }
         );
         router.push({ pathname: '/' });

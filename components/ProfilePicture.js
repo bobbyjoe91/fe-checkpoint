@@ -8,6 +8,7 @@ export default function ProfilePicture({ source, height, width, alt }) {
       height={height ?? 100}
       className="profile-pic"
       alt={alt}
+      priority
     />
   );
 }
