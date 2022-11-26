@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 export default function Login() {
   const [loginError, setLoginError] = useState('');
 
-  const [cookies, setCookies] = useCookies(['user']);
+  const [cookies, setCookies] = useCookies();
   const router = useRouter();
 
   function onLogin(event) {

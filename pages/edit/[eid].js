@@ -17,7 +17,7 @@ export default function Edit() {
   const router = useRouter();
   const { eid } = router.query;
 
-  const [cookies, setCookies] = useCookies(['user']);
+  const [cookies, setCookies] = useCookies();
 
   const [changePassSuccess, setChangePassSuccess] = useState(false);
   const [changePassError, setChangePassError] = useState('');

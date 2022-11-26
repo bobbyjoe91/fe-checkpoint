@@ -13,7 +13,7 @@ import Footer from '../../components/Footer';
 export default function Login() {
   const router = useRouter();
 
-  const [cookies, setCookies] = useCookies(['user']);
+  const [cookies, setCookies] = useCookies();
   const [loginError, setLoginError] = useState('');
 
   function onAdminLogin(event) {
