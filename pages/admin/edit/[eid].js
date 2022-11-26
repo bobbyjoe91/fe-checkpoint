@@ -79,7 +79,7 @@ export default function EditEmployee({ swrUserData }) {
               <div className="d-flex justify-content-center mb-3">
                 <ProfilePicture
                   src={userData.photo_url}
-                  alt="John Doe's Profile Picture"
+                  alt={`${userData.name}'s Profile Picture`}
                 />
               </div>
               <Form.Group className="mb-3">
