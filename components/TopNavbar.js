@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import { Navbar, DropdownButton, Dropdown } from "react-bootstrap";
 
+import { AdminAuthContext } from '../context/AdminAuthContext';
 import { AuthContext } from '../context/AuthContext';
 
 function SettingIcon() {
@@ -20,7 +21,7 @@ function SettingIcon() {
 }
 
 export default function TopNavbar({ title, brandHref, isAdmin, employeeId }) {
-  const { logout } = useContext(AuthContext);
+  const { logout } = useContext(isAdmin ? AdminAuthContext : AuthContext);
   const homeUrl = brandHref ?? (isAdmin ? '/admin' : '/');
 
   return (

@@ -8,7 +8,7 @@ export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
   const router = useRouter();
-  const [cookies, setCookies] = useCookies(['user']);
+  const [cookies, setCookies] = useCookies();
 
   const [isLogin, setLogin] = useState(false);
 

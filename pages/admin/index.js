@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 import { Pagination, Table } from 'react-bootstrap';
 
+import { AdminAuthProvider } from '../../context/AdminAuthContext';
+
 import Footer from '../../components/Footer';
 import ProfilePicture from '../../components/ProfilePicture';
 import TopNavbar from '../../components/TopNavbar';
@@ -22,7 +24,7 @@ function EditRow({ eid, name }) {
 
 export default function Home() {
   return (
-    <>
+    <AdminAuthProvider>
       <Head>
         <title>CheckPoint | Home</title>
         <meta name="description" content="CheckPoint" />
@@ -146,6 +148,6 @@ export default function Home() {
       </div>
 
       <Footer />
-    </>
+    </AdminAuthProvider>
   );
 }
