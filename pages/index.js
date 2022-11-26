@@ -55,7 +55,6 @@ export default function Home() {
   }, [hasClockedIn]);
 
   useEffect(() => {
-    console.log(fromDate, toDate);
     let startDate = 'start_date=' + fromDate;
     let endDate = 'end_date=' + toDate;
 
@@ -97,11 +96,6 @@ export default function Home() {
     else if (status === 'to') setToDate(event.target.value);
   }
 
-  if (_.isEmpty(swrUserData)) {
-    return <h1>Loading...</h1>;
-  } else if (error) {
-    return <p>Loading failed</p>
-  }
 
   return (
     <AuthProvider>
@@ -110,123 +104,131 @@ export default function Home() {
         <meta name="description" content="CheckPoint" />
       </Head>
 
-      <TopNavbar employeeId={1} />
-      <div className="container">
-        <main className="main">
-          <div className="d-none d-md-flex align-items-md-center">
-            <ProfilePicture
-              src={null}
-              alt="John Doe's Profile Picture"
-            />
+      {
+          _.isEmpty(swrUserData)
+            ? <h1>Loading...</h1>
+            : error
+            ? <p>Loading failed</p>
+            : <>
+                <TopNavbar employeeId={userData.employee_id} />
+                <div className="container">
+                  <main className="main">
+                    <div className="d-none d-md-flex align-items-md-center">
+                      <ProfilePicture
+                        src={null}
+                        alt="John Doe's Profile Picture"
+                      />
 
-            <div id="profile-data" className="d-none d-md-flex flex-column justify-content-md-evenly">
-              <h1 className={styles.title}>{userData.name}</h1>
-              <p>{userData.division_name} | {userData.position_name}</p>
-            </div>
-          </div>
+                      <div id="profile-data" className="d-none d-md-flex flex-column justify-content-md-evenly">
+                        <h1 className={styles.title}>{userData.name}</h1>
+                        <p>{userData.division_name} | {userData.position_name}</p>
+                      </div>
+                    </div>
 
-          <div className="d-block d-sm-block d-md-none">
-            <div id="profile">
-              <ProfilePicture
-                src={null}
-                alt="John Doe's Profile Picture"
-              />
-              <h1 className={styles.title}>{userData.name}</h1>
-              <p className="department">{userData.division_name}</p>
-              <p>{userData.position_name}</p>
-            </div>
-          </div>
+                    <div className="d-block d-sm-block d-md-none">
+                      <div id="profile">
+                        <ProfilePicture
+                          src={null}
+                          alt="John Doe's Profile Picture"
+                        />
+                        <h1 className={styles.title}>{userData.name}</h1>
+                        <p className="department">{userData.division_name}</p>
+                        <p>{userData.position_name}</p>
+                      </div>
+                    </div>
 
-          <div id="clock-in-out">
-            <Button
-              variant="warning"
-              style={{ marginRight: '10px' }}
-              onClick={() => onClocking('out')}
-              disabled={!hasClockedIn}
-            >
-              Clock Out
-            </Button>
-            <Button varian="primary" onClick={() => onClocking('in')} disabled={hasClockedIn}>
-              Clock In
-            </Button>
-          </div>
+                    <div id="clock-in-out">
+                      <Button
+                        variant="warning"
+                        style={{ marginRight: '10px' }}
+                        onClick={() => onClocking('out')}
+                        disabled={!hasClockedIn}
+                      >
+                        Clock Out
+                      </Button>
+                      <Button varian="primary" onClick={() => onClocking('in')} disabled={hasClockedIn}>
+                        Clock In
+                      </Button>
+                    </div>
 
-          {/* daterange filter */}
-          <div
-            style={{ margin: '10px 0' }}
-            className="d-none d-md-flex flex-row justify-content-md-between"
-          >
-            <p>Filter berdasarkan tanggal</p>
-            <div id='filter'>
-              <div>
-                <label className='filter-label'>Dari:</label>
-                <input type="date" onChange={(event) => onChangeDate(event, 'from')} />
-              </div>
-              <div style={{ width: '10px' }} />
-              <div>
-                <label className='filter-label'>Hingga:</label>
-                <input type="date" onChange={(event) => onChangeDate(event, 'to')} />
-              </div>
-            </div>
-          </div>
+                    {/* daterange filter */}
+                    <div
+                      style={{ margin: '10px 0' }}
+                      className="d-none d-md-flex flex-row justify-content-md-between"
+                    >
+                      <p>Filter berdasarkan tanggal</p>
+                      <div id='filter'>
+                        <div>
+                          <label className='filter-label'>Dari:</label>
+                          <input type="date" onChange={(event) => onChangeDate(event, 'from')} />
+                        </div>
+                        <div style={{ width: '10px' }} />
+                        <div>
+                          <label className='filter-label'>Hingga:</label>
+                          <input type="date" onChange={(event) => onChangeDate(event, 'to')} />
+                        </div>
+                      </div>
+                    </div>
 
-          <div className="d-block d-sm-block d-md-none">
-            <div style={{ height: '20px' }} />
-            <p>Filter berdasarkan tanggal</p>
-            <div style={{ height: '10px' }} />
-            <div
-              style={{ marginBottom: '10px' }}
-              className="d-flex flex-row justify-content-between justify-content-between flex-wrap"
-            >
-              <div>
-                <label className='filter-label'>Dari:</label>
-                <input type="date" onChange={(event) => onChangeDate(event, 'from')} />
+                    <div className="d-block d-sm-block d-md-none">
+                      <div style={{ height: '20px' }} />
+                      <p>Filter berdasarkan tanggal</p>
+                      <div style={{ height: '10px' }} />
+                      <div
+                        style={{ marginBottom: '10px' }}
+                        className="d-flex flex-row justify-content-between justify-content-between flex-wrap"
+                      >
+                        <div>
+                          <label className='filter-label'>Dari:</label>
+                          <input type="date" onChange={(event) => onChangeDate(event, 'from')} />
 
-                <div className="d-block d-sm-none" style={{ height: '10px' }} />
-              </div>
-              <div>
-                <label className='filter-label'>Hingga:</label>
-                <input type="date" onChange={(event) => onChangeDate(event, 'to')} />
-              </div>
-            </div>
-          </div>
+                          <div className="d-block d-sm-none" style={{ height: '10px' }} />
+                        </div>
+                        <div>
+                          <label className='filter-label'>Hingga:</label>
+                          <input type="date" onChange={(event) => onChangeDate(event, 'to')} />
+                        </div>
+                      </div>
+                    </div>
 
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Tanggal</th>
-                <th>Clock In</th>
-                <th>Clock Out</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                !swrAttendanceData
-                  ? <tr>
-                      <td colSpan={3}>Loading attendances...</td>
-                    </tr>
-                  : _.isEmpty(swrAttendanceData)
-                  ? <tr>
-                      <td colSpan={3}>No attendances available</td>
-                    </tr>
-                  : errorAttendance
-                  ? <tr>
-                      <td colSpan={3}>Error getting attendances</td>
-                    </tr>
-                  : swrAttendanceData.map((attendance) => (
-                      <tr key={attendance.attendance_id}>
-                        <td>{attendance.date}</td>
-                        <td>{attendance.time_in}</td>
-                        <td>{attendance.time_out}</td>
-                      </tr>
-                    ))  
-              }
-            </tbody>
-          </Table>
-        </main>
-      </div>
+                    <Table striped bordered hover>
+                      <thead>
+                        <tr>
+                          <th>Tanggal</th>
+                          <th>Clock In</th>
+                          <th>Clock Out</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          !swrAttendanceData
+                            ? <tr>
+                              <td colSpan={3}>Loading attendances...</td>
+                            </tr>
+                            : _.isEmpty(swrAttendanceData)
+                            ? <tr>
+                              <td colSpan={3}>No attendances available</td>
+                            </tr>
+                            : errorAttendance
+                            ? <tr>
+                              <td colSpan={3}>Error getting attendances</td>
+                            </tr>
+                            : swrAttendanceData.map((attendance) => (
+                              <tr key={attendance.attendance_id}>
+                                <td>{attendance.date}</td>
+                                <td>{attendance.time_in}</td>
+                                <td>{attendance.time_out}</td>
+                              </tr>
+                            ))
+                        }
+                      </tbody>
+                    </Table>
+                  </main>
+                </div>
 
-      <Footer />
+                <Footer />
+              </>
+      }
     </AuthProvider>
   );
 }
