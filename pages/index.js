@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import axios from 'axios';
 import _ from 'lodash';
-import { Button, Pagination, Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { useCookies } from 'react-cookie';
 import useSWR from 'swr';
 
@@ -17,6 +17,11 @@ import styles from '../styles/custom/Index.module.css';
 
 export default function Home() {
   const [cookies, setCookies] = useCookies(['user']);
+
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [queryParam, setQueryParam] = useState('');
+
   const [userData, setUserData] = useState({});
   const [attendanceId, setAttendanceId] = useState(null);
   const [hasClockedIn, setClockedIn] = useState(false);
@@ -28,8 +33,8 @@ export default function Home() {
   );
 
   const { data: swrAttendanceData, errorAttendance, mutate: mutateAttendance } = useSWR(
-    `http://localhost:8000/attendances/${cookies.employeeId}`,
-    (url) => axios.get(url).then((response) => response.data.data),
+    [`http://localhost:8000/attendances/${cookies.employeeId}`, queryParam],
+    (url, query = '') => axios.get(url + '?' + query).then((response) => response.data.data),
     { revalidateOnFocus: false }
   );
 
@@ -49,6 +54,23 @@ export default function Home() {
     mutateAttendance();
   }, [hasClockedIn]);
 
+  useEffect(() => {
+    console.log(fromDate, toDate);
+    let startDate = 'start_date=' + fromDate;
+    let endDate = 'end_date=' + toDate;
+
+    if (fromDate & toDate) {
+      setQueryParam(startDate + '&' + endDate);
+    } else if (toDate) {
+      setQueryParam(endDate);
+    } else if (fromDate) {
+      setQueryParam(startDate);
+    } else {
+      setQueryParam('');
+    }
+
+  }, [fromDate, toDate]);
+
   async function onClocking(status) {
     try {
       const response = await axios.post(
@@ -66,6 +88,13 @@ export default function Home() {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  function onChangeDate(event, status) {
+    event.preventDefault();
+
+    if (status === 'from') setFromDate(event.target.value);
+    else if (status === 'to') setToDate(event.target.value);
   }
 
   if (_.isEmpty(swrUserData)) {
@@ -131,12 +160,12 @@ export default function Home() {
             <div id='filter'>
               <div>
                 <label className='filter-label'>Dari:</label>
-                <input type="date" />
+                <input type="date" onChange={(event) => onChangeDate(event, 'from')} />
               </div>
               <div style={{ width: '10px' }} />
               <div>
                 <label className='filter-label'>Hingga:</label>
-                <input type="date" />
+                <input type="date" onChange={(event) => onChangeDate(event, 'to')} />
               </div>
             </div>
           </div>
@@ -151,13 +180,13 @@ export default function Home() {
             >
               <div>
                 <label className='filter-label'>Dari:</label>
-                <input type="date" />
+                <input type="date" onChange={(event) => onChangeDate(event, 'from')} />
 
                 <div className="d-block d-sm-none" style={{ height: '10px' }} />
               </div>
               <div>
                 <label className='filter-label'>Hingga:</label>
-                <input type="date" />
+                <input type="date" onChange={(event) => onChangeDate(event, 'to')} />
               </div>
             </div>
           </div>
@@ -170,38 +199,30 @@ export default function Home() {
                 <th>Clock Out</th>
               </tr>
             </thead>
-
-            {
-              !swrAttendanceData
-                ? <p>Loading attendances...</p>
-                : _.isEmpty(swrAttendanceData)
-                ? <h2>No attendances available</h2>
-                : errorAttendance
-                ? <h2>Error getting attendances</h2>
-                : <tbody>
-                    {
-                      swrAttendanceData.map((attendance) => (
-                        <tr>
-                          <td>{attendance.date}</td>
-                          <td>{attendance.time_in}</td>
-                          <td>{attendance.time_out}</td>
-                        </tr>
-                      ))
-                    }
-                  </tbody>
-            }
+            <tbody>
+              {
+                !swrAttendanceData
+                  ? <tr>
+                      <td colSpan={3}>Loading attendances...</td>
+                    </tr>
+                  : _.isEmpty(swrAttendanceData)
+                  ? <tr>
+                      <td colSpan={3}>No attendances available</td>
+                    </tr>
+                  : errorAttendance
+                  ? <tr>
+                      <td colSpan={3}>Error getting attendances</td>
+                    </tr>
+                  : swrAttendanceData.map((attendance) => (
+                      <tr key={attendance.attendance_id}>
+                        <td>{attendance.date}</td>
+                        <td>{attendance.time_in}</td>
+                        <td>{attendance.time_out}</td>
+                      </tr>
+                    ))  
+              }
+            </tbody>
           </Table>
-
-          <div className="d-flex justify-content-center">
-            <Pagination>
-              <Pagination.First />
-              <Pagination.Prev />
-              <Pagination.Item>1</Pagination.Item>
-              <Pagination.Item>2</Pagination.Item>
-              <Pagination.Next />
-              <Pagination.Last />
-            </Pagination>
-          </div>
         </main>
       </div>
 
