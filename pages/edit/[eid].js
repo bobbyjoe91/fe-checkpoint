@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Head from "next/head";
 import { useRouter } from "next/router";
 
 import axios from 'axios';
+import _ from 'lodash';
 import { Button, Form } from "react-bootstrap";
 import { useCookies } from 'react-cookie';
+import useSWR from 'swr';
 
 import { AuthProvider } from '../../context/AuthContext';
 
@@ -21,6 +23,22 @@ export default function Edit() {
 
   const [changePassSuccess, setChangePassSuccess] = useState(false);
   const [changePassError, setChangePassError] = useState('');
+
+  const [userData, setUserData] = useState({});
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const { data: swrUserData, error } = useSWR(
+    `http://localhost:8000/employee/${eid}`,
+    (url) => axios.get(url).then((response) => response.data.data),
+    { revalidateOnFocus: false }
+  );
+
+  useEffect(() => {
+    if (!_.isEmpty(swrUserData)) {
+      setUserData(swrUserData[0]);
+      setPhoneNumber(swrUserData[0].phone_number);
+    }
+  }, [swrUserData]);
 
   function onChangePassword(event) {
     event.preventDefault();
@@ -52,8 +70,30 @@ export default function Edit() {
     }
   }
 
-  function onChangePersonalData() {
+  function onChangePhoneNumber(event) {
+    event.preventDefault();
+    setPhoneNumber(event.target.value);
+  }
 
+  function onChangePersonalData(event) {
+    event.preventDefault();
+
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    const profilePic = document.getElementById('profilePic').files;
+
+    let formData = new FormData();
+    formData.append('phoneNumber', phoneNumber);
+
+    if (profilePic.length) {
+      formData.append('profilePic', picFile);
+    }
+
+    axios.post(`http://localhost:8000/edit/${eid}`, formData)
+      .then(() => router.push({ pathname: '/' }))
+      .catch((error) => {
+        console.error(error);
+        setPasswordError(error.response.data.data);
+      });
   }
 
   return (
@@ -69,28 +109,34 @@ export default function Edit() {
           <div>
             <div id="main-form" className="mb-5">
               <h2>Ubah foto dan nomor ponsel</h2>
-              <Form>
+              <Form onSubmit={onChangePersonalData}>
                 <div className="d-flex justify-content-center mb-3">
                   <ProfilePicture
-                    src={null}
+                    src={userData.photo_url}
                     alt="John Doe's Profile Picture"
                   />
                 </div>
                 <Form.Group className="mb-3">
                   <Form.Label>Ubah foto profil</Form.Label>
-                  <Form.Control type="file" name="profile-pic" accep="image/*" />
+                  <Form.Control id="profilePic" type="file" name="profile-pic" accep="image/*" />
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Nomor ponsel</Form.Label>
-                  <Form.Control placeholder="087888990023" type="tel" />
+                  <Form.Control
+                    id="phoneNumber"
+                    placeholder="087888990023"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={onChangePhoneNumber}
+                  />
                 </Form.Group>
-              </Form>
 
-              <div className="clearfix">
-                <Button variant="success" className="float-end" onClick={onChangePersonalData}>
-                  Ubah
-                </Button>
-              </div>
+                <div className="clearfix">
+                  <Button type="submit" variant="success" className="float-end">
+                    Ubah
+                  </Button>
+                </div>
+              </Form>
             </div>
 
             <div id="main-form">
