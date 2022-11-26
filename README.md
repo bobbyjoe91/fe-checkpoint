@@ -5,8 +5,9 @@ FE-CheckPoint dikembangkan menggunakan Javascript, Next.js dengan package manage
 
 ## Petunjuk
 
+Jalankan [BE-CheckPoint](https://github.com/bobbyjoe91/be-checkpoint) terlebih dulu sebelum menjalankan front-end ini.
+
 1. Pasang seluruh package yang tertulis di package.json dengan perintah `yarn install` atau `yarn`
 2. Untuk menjalankan FE-CheckPoint pada lingkungan Development, gunakan perintah `yarn dev`
 
 Buka [http://localhost:3000](http://localhost:3000) pada browser untuk melihat hasilnya.
-
