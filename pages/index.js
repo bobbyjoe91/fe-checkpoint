@@ -18,6 +18,8 @@ import styles from '../styles/custom/Index.module.css';
 export default function Home() {
   const [cookies, setCookies] = useCookies(['user']);
   const [userData, setUserData] = useState({});
+  const [attendanceId, setAttendanceId] = useState(null);
+  const [hasClockedIn, setClockedIn] = useState(false);
 
   const { data: swrUserData, error } = useSWR(
     `http://localhost:8000/employee/${cookies.employeeId}`,
@@ -28,10 +30,33 @@ export default function Home() {
   useEffect(() => {
     if (!_.isEmpty(swrUserData)) {
       setUserData(swrUserData[0]);
+      if (swrUserData[0].attendance_id) {
+        setClockedIn(true);
+        setAttendanceId(swrUserData[0].attendance_id);
+      } 
     }
 
     return () => {}
-  }, [swrUserData])
+  }, [swrUserData]);
+
+  async function onClocking(status) {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/clock?status=${status}`,
+        {
+          employeeId: cookies.employeeId,
+          attendanceId
+        }
+      );
+
+      if (response.status === 200) {
+        setClockedIn(!hasClockedIn);
+        setAttendanceId(response.data.data.attendanceId);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   if (_.isEmpty(swrUserData)) {
     return <h1>Loading...</h1>;
@@ -77,11 +102,14 @@ export default function Home() {
             <Button
               variant="warning"
               style={{ marginRight: '10px' }}
-              disabled
+              onClick={() => onClocking('out')}
+              disabled={!hasClockedIn}
             >
               Clock Out
             </Button>
-            <Button varian="primary">Clock In</Button>
+            <Button varian="primary" onClick={() => onClocking('in')} disabled={hasClockedIn}>
+              Clock In
+            </Button>
           </div>
 
           {/* daterange filter */}
